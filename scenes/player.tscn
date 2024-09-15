@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://n055c6m7kbre"]
+
+[ext_resource type="SpriteFrames" uid="uid://n2urlfpb2m82" path="res://resources/soul.tres" id="1_mesa7"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_pis21"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vwt75"]
+size = Vector2(16, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0dr75"]
+size = Vector2(18, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xiaou"]
+size = Vector2(20, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n8734"]
+size = Vector2(18, 4)
+
+[node name="Player" type="CharacterBody2D"]
+floor_snap_length = 5.0
+platform_on_leave = 1
+script = ExtResource("1_pis21")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -21)
+sprite_frames = ExtResource("1_mesa7")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14.5)
+shape = SubResource("RectangleShape2D_vwt75")
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.15
+one_shot = true
+
+[node name="JumpBuffer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.15
+one_shot = true
+
+[node name="Debug" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -56.0
+offset_right = 24.0
+offset_bottom = -32.0
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+
+[node name="LedgeGrab" type="CollisionShape2D" parent="."]
+position = Vector2(0, -34)
+shape = SubResource("RectangleShape2D_0dr75")
+
+[node name="WallCheck" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -25)
+shape = SubResource("RectangleShape2D_xiaou")
+target_position = Vector2(0, 16)
+
+[node name="FloorCheck" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(0, -16)
+target_position = Vector2(0, 24)
+
+[node name="TopCheck" type="ShapeCast2D" parent="."]
+visible = false
+position = Vector2(0, -36)
+shape = SubResource("RectangleShape2D_n8734")
+target_position = Vector2(0, 0)

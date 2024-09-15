@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://c3eghgrpt4rb3"]
+
+[ext_resource type="Script" path="res://scenes/test_level.gd" id="1_ldp37"]
+[ext_resource type="Script" path="res://scenes/environment.gd" id="1_qml13"]
+[ext_resource type="PackedScene" uid="uid://n055c6m7kbre" path="res://scenes/player.tscn" id="2_ng4mn"]
+[ext_resource type="Script" path="res://scenes/label.gd" id="3_ov2dd"]
+[ext_resource type="PackedScene" uid="uid://dgttu6i0gjkyn" path="res://scenes/moving_block.tscn" id="4_yfqdf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ugd3"]
+size = Vector2(64, 448)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3bu6"]
+size = Vector2(64, 576)
+
+[node name="TestLevel" type="Node2D"]
+script = ExtResource("1_ldp37")
+
+[node name="Environment" type="StaticBody2D" parent="."]
+script = ExtResource("1_qml13")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Environment"]
+polygon = PackedVector2Array(0, -80, 64, -80, 64, 0, 192, 24, 320, 24, 320, 0, 384, 0, 384, 24, 520, 24, 520, -64, 608, -64, 720, -88, 832, -88, 960, -40, 1024, -40, 1024, 24, 1152, 24, 1152, -104, 1280, -104, 1280, -192, 1408, -192, 1408, 192, 0, 192)
+
+[node name="Polygon2D" type="Polygon2D" parent="Environment"]
+color = Color(0.849996, 0.530172, 0.281273, 1)
+
+[node name="Label" type="Label" parent="Environment"]
+visible = false
+offset_left = 352.0
+offset_top = -384.0
+offset_right = 528.0
+offset_bottom = -361.0
+theme_override_font_sizes/font_size = 10
+text = "Wishlist Lost Resolve on Steam!"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_ov2dd")
+
+[node name="Player" parent="." instance=ExtResource("2_ng4mn")]
+position = Vector2(248, 24)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(0, -25)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 15.0
+
+[node name="MovingBlock" parent="." instance=ExtResource("4_yfqdf")]
+position = Vector2(432, -288)
+
+[node name="Marker2D" parent="MovingBlock" index="1"]
+position = Vector2(0, 144)
+
+[node name="Invisiwall" type="StaticBody2D" parent="."]
+position = Vector2(-32, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Invisiwall"]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_0ugd3")
+
+[node name="Invisiwall2" type="StaticBody2D" parent="."]
+position = Vector2(1440, -128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Invisiwall2"]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_d3bu6")
+
+[editable path="MovingBlock"]
